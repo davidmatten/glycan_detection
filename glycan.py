@@ -3,6 +3,8 @@ import argparse
 import os
 from Bio import SeqIO
 
+# a silly edit to test bitbucket pushing / pulling. :D
+
 def get_glycan_sites(seq):
     sites = []
     return sites
