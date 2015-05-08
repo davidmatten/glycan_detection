@@ -2,11 +2,16 @@
 import argparse
 import os
 from Bio import SeqIO
-
-# a silly edit to test bitbucket pushing / pulling. :D
+import re
+import sys
 
 def get_glycan_sites(seq):
     sites = []
+    p = re.compile('N[^P-][TS]')
+    iterator = p.finditer(seq)
+    for match in iterator:
+        start, end = match.span()
+        sites.append(start)
     return sites
 
 def get_binary_sites(seq):
@@ -15,6 +20,7 @@ def get_binary_sites(seq):
 
 
 def main(indir, ft):
+
     file_list = os.walk(indir).next()[2]
     file_list = [f for f in file_list if f[-(len(ft)):] == ft]
     for fn in file_list:
