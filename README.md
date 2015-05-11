@@ -13,6 +13,12 @@ In the same directory as the input file, two files will be created.
 
 1. fasta like output of positions at which the glycosylation sites are found (if any are).
 
+    ```
+    Code
+    More Code
+    ```
+2. blaa
+
   example outfile:
     ~~~~
     > seq1
