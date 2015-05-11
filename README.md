@@ -14,15 +14,13 @@ In the same directory as the input file, two files will be created.
 1. fasta like output of positions at which the glycosylation sites are found (if any are).
 
   example outfile:
-
-  ```
-  #!python
-
-  > seq1
-  1, 45, 67
-  > seq2
-  33, 36, 90
-  ```
+```
+#!python
+> seq1
+1, 45, 67
+> seq2
+33, 36, 90
+```
 
 2. fasta like output. Binary version.
   Each sequence position is represented by a character; either a one, or a zero.
