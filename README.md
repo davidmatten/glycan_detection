@@ -10,12 +10,17 @@ This tool is used to detect N-linked glycosylation in amino acid sequences.
 ###### Tool output:
 In the same directory as the input file, two files will be created.
 1. fasta like output of positions at which the glycosylation sites are found (if any are).
-  <br>example outfile:<br>
-  <pre><code>
-  > seq1<br>
-  1, 45, 67<br>
-  > seq2<br>
-  33, 36, 90<br>
+  example outfile:
+
+```
+#!python
+
+  > seq1
+  1, 45, 67
+  > seq2
+  33, 36, 90
+```
+
 2. fasta like output. Binary version.
   Each sequence position is represented by a character; either a one, or a zero.
   A zero indicates that this site is not the starting position for a glycosylation site.
