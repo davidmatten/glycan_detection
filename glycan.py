@@ -6,8 +6,9 @@ import re
 import sys
 
 def get_glycan_sites(seq):
+    seq = seq.replace("-", "")
     sites = []
-    p = re.compile('N[^P-][TS]')
+    p = re.compile('N[^P][TS]')
     iterator = p.finditer(seq)
     for match in iterator:
         start, end = match.span()
@@ -16,6 +17,13 @@ def get_glycan_sites(seq):
 
 def get_binary_sites(seq):
     sites = []
+    p = re.compile('N[^P][TS]')
+    iterator = p.finditer(seq)
+    for match in iterator:
+        start, end = match.span()
+        sites.append(start)
+    for i in range(len(seq)):
+        
     return sites
 
 
