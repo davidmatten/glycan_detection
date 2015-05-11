@@ -15,14 +15,14 @@ In the same directory as the input file, two files will be created.
 
   example outfile:
 
-```
-#!python
+  ```
+  #!python
 
   > seq1
   1, 45, 67
   > seq2
   33, 36, 90
-```
+  ```
 
 2. fasta like output. Binary version.
   Each sequence position is represented by a character; either a one, or a zero.
