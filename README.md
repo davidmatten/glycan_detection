@@ -26,12 +26,18 @@ In the same directory as the input file, two files will be created.
   Each sequence position is represented by a character; either a one, or a zero.
   A zero indicates that this site is not the starting position for a glycosylation site.
   A one indicates that this site is a starting position for a glycosylation site.
-  <br>example outfile:<br>
-  <pre><code>
-  > seq1<br>
-  0100<br>
-  > seq2<br>
-  0000<br>
+
+  example outfile:
+
+```
+#!python
+
+  > seq1
+  0100
+  > seq2
+  0000
+```
+
 
 #### SPECIAL NOTES
 Strips ALL gaps out of sequences. Any output positions given will be without gaps.
