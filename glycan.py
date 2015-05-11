@@ -1,9 +1,9 @@
 #!/usr/bin/python
 import argparse
-import os
-from Bio import SeqIO
 import re
-import sys
+
+from Bio import SeqIO
+
 
 def get_glycan_sites(seq):
     seq = seq.replace("-", "")
@@ -22,26 +22,28 @@ def get_binary_sites(seq):
     for match in iterator:
         start, end = match.span()
         sites.append(start)
+    sites_seq = ""
     for i in range(len(seq)):
-        
-    return sites
+        if i in sites:
+            sites_seq += "1"
+        else:
+            sites_seq += "0"
+
+    return sites_seq
 
 
-def main(indir, ft):
+def main(infile):
+    handle = open(infile, "rU")
+    records = list(SeqIO.parse(handle, "fasta"))
+    handle.close()
+    for record in records:
+        sites = get_glycan_sites(str(record.seq))
+        binary_sites = get_binary_sites(str(record.seq))
 
-    file_list = os.walk(indir).next()[2]
-    file_list = [f for f in file_list if f[-(len(ft)):] == ft]
-    for fn in file_list:
-        print indir + fn
-        handle = open(indir + fn, "rU")
-        records = list(SeqIO.parse(handle, "fasta"))
-        handle.close()
-        for record in records:
-            binary_sites = get_binary_sites(str(record.seq))
-            print binary_sites
-            # get binary sites (read)
-            # write that to file
-            # append it to data structure
+        # print binary_sites
+        # get binary sites (read)
+        # write that to file
+        # append it to data structure
     # make summary of data
     # write summary to file
 
@@ -53,14 +55,10 @@ def main(indir, ft):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Glycan binding site detection.')
-    parser.add_argument('-in', '--indir', type=str,
-                        help='The input file path', required = True)
-    parser.add_argument('-ft', '--filetype', type=str, 
-            help="The file extension (without a full stop) of the files to be used, which are located in the specified input directory.", 
-            required=True)
+    parser.add_argument('-in', '--infile', type=str,
+                        help='The input path to the source file', required = True)
     args = parser.parse_args()
     
-    indir = args.indir
-    ft = args.filetype
-  
-    main(indir, ft)
+    infile = args.infile
+
+    main(infile)

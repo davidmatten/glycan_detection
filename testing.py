@@ -1,5 +1,7 @@
 import unittest
-from glycan import get_glycan_sites 
+
+from glycan import get_glycan_sites, get_binary_sites
+
 
 class TestGlycanDetector(unittest.TestCase):
 
@@ -63,6 +65,10 @@ class TestGlycanDetector(unittest.TestCase):
         sites = get_glycan_sites(seq)
         self.assertEqual(sites, [0, 4])
 
+    def test_binary_base_pattern(self):
+        seq = "NGT"
+        sites = get_binary_sites(seq)
+        self.assertEquals(sites, "100")
 
 if __name__ == '__main__':
     unittest.main()
