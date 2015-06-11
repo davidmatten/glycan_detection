@@ -2,7 +2,7 @@
 import argparse
 import re
 
-from Bio import SeqIO
+from daves_tools import fasta_to_dct
 
 
 def get_glycan_sites(seq):
@@ -28,27 +28,38 @@ def get_binary_sites(seq):
             sites_seq += "1"
         else:
             sites_seq += "0"
-
     return sites_seq
 
-
 def main(infile):
-    handle = open(infile, "rU")
-    records = list(SeqIO.parse(handle, "fasta"))
-    handle.close()
-    for record in records:
-        sites = get_glycan_sites(str(record.seq))
-        binary_sites = get_binary_sites(str(record.seq))
+    records = fasta_to_dct(infile)
 
-        # print binary_sites
-        # get binary sites (read)
-        # write that to file
-        # append it to data structure
-    # make summary of data
-    # write summary to file
+    gly_fn = infile[:infile.rfind(".")] + "_glycans_pos.out"
+    gly_fw = open(gly_fn, "w")
+    bin_fn = infile[:infile.rfind(".")] + "_glycans_binary.out"
+    bin_fw = open(bin_fn, "w")
 
-    # make plots of summary.    
-    
+    summary_gly_pos = []
+    summary_binary = []
+    seq_has_glyc = 0
+
+    for key, seq in records.items():
+        sites = get_glycan_sites(seq)
+        binary_sites = get_binary_sites(seq)
+
+        gly_fw.write(">"+key+"\n"+str(sites)+"\n")
+        bin_fw.write(">"+key+"\n"+str(binary_sites)+"\n")
+
+        if len(sites) > 1:
+            seq_has_glyc += 1
+        summary_gly_pos.append(sites)
+        summary_binary.append(binary_sites)
+
+    total_sites = sum([len(x) for x in summary_gly_pos])
+
+    #print "A total of %s sites were found in %s sequences." %(total_sites, seq_has_glyc)
+
+    gly_fw.close()
+    bin_fw.close()
     
     print "end"
 
