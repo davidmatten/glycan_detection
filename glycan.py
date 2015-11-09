@@ -77,6 +77,6 @@ if __name__ == "__main__":
     
     infile = args.infile
     outdir = args.outdir
-    gap = args.gaps
+    gaps = args.gaps
 
     main(infile, outdir, gaps)
