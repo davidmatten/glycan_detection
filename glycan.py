@@ -1,16 +1,15 @@
 #!/usr/bin/python
 import argparse
-import re
 import os
 
+import regex as re
 from daves_tools import fasta_to_dct
 
 
 def get_glycan_sites(seq, regex_pattern):
     seq = seq.replace("-", "")
     sites = []
-    p = re.compile(regex_pattern)
-    iterator = p.finditer(seq)
+    iterator = re.finditer(regex_pattern, seq, overlapped=True)
     for match in iterator:
         start, end = match.span()
         sites.append(start)
@@ -18,8 +17,7 @@ def get_glycan_sites(seq, regex_pattern):
 
 def get_binary_sites(seq, regex_pattern):
     sites = []
-    p = re.compile(regex_pattern)
-    iterator = p.finditer(seq)
+    iterator = re.finditer(regex_pattern, seq, overlapped=True)
     for match in iterator:
         start, end = match.span()
         sites.append(start)
