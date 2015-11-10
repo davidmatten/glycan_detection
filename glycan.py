@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from __future__ import print_function
 import argparse
 import os
 
@@ -6,8 +7,9 @@ import regex as re
 from daves_tools import fasta_to_dct
 
 
-def get_glycan_sites(seq, regex_pattern):
-    seq = seq.replace("-", "")
+def get_glycan_sites(seq, regex_pattern, strip_gap):
+    if strip_gap == True:    
+        seq = seq.replace("-", "")
     sites = []
     iterator = re.finditer(regex_pattern, seq, overlapped=True)
     for match in iterator:
@@ -29,7 +31,7 @@ def get_binary_sites(seq, regex_pattern):
             sites_seq += "0"
     return sites_seq
 
-def main(infile, out_dir):
+def main(infile, out_dir, gaps):
     records = fasta_to_dct(infile)
     in_dir, in_fn = os.path.split(infile)[0], os.path.split(infile)[1]
 
@@ -45,7 +47,7 @@ def main(infile, out_dir):
     summary_binary = []
 
     for key, seq in records.items():
-        sites = get_glycan_sites(seq, regex_pattern)
+        sites = get_glycan_sites(seq, regex_pattern, gaps)
         binary_sites = get_binary_sites(seq, regex_pattern)
 
         gly_fw.write(">"+key+"\n"+str(sites)+"\n")
@@ -58,7 +60,7 @@ def main(infile, out_dir):
     gly_fw.close()
     bin_fw.close()
     
-    print "end"
+    print("end")
 
 
 if __name__ == "__main__":
@@ -67,9 +69,12 @@ if __name__ == "__main__":
                         help='The input path to the source file', required = True)
     parser.add_argument('-out', '--outdir', type=str,
                         help='The path to the output', required = True)
+    parser.add_argument('-gap', '--gaps', type=str,
+                        help='for remove gaps use "True". otherwise set to "False"', required = True)
     args = parser.parse_args()
     
     infile = args.infile
     outdir = args.outdir
+    gaps = args.gaps
 
-    main(infile, outdir)
+    main(infile, outdir, gaps)
