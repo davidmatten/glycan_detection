@@ -1,10 +1,11 @@
 #!/usr/bin/python
 from __future__ import print_function
+
 import argparse
 import os
 
 import regex as re
-from daves_tools import fasta_to_dct
+from smallBixTools import smallBixTools as st
 
 
 def get_glycan_sites(seq, regex_pattern, strip_gap):
@@ -32,7 +33,7 @@ def get_binary_sites(seq, regex_pattern):
     return sites_seq
 
 def main(infile, out_dir, gaps):
-    records = fasta_to_dct(infile)
+    records = st.fasta_to_dct(infile)
     in_dir, in_fn = os.path.split(infile)[0], os.path.split(infile)[1]
 
     gly_fn = out_dir + in_fn[:in_fn.rfind(".")] + "_glycans_pos.out"
