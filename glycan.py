@@ -3,7 +3,6 @@ from __future__ import print_function
 
 import argparse
 import os
-
 import regex as re
 from smallBixTools import smallBixTools as st
 
@@ -15,7 +14,7 @@ def get_glycan_sites(seq, regex_pattern, strip_gap):
     iterator = re.finditer(regex_pattern, seq, overlapped=True)
     for match in iterator:
         start, end = match.span()
-        sites.append(start)
+        sites.append(start+1)
     return sites
 
 def get_binary_sites(seq, regex_pattern):
@@ -42,7 +41,8 @@ def main(infile, out_dir, gaps):
     gly_fw = open(gly_fn, "w")
     bin_fw = open(bin_fn, "w")
 
-    regex_pattern = 'N[\-]*[^P\-][\-]*[TS]'
+#    regex_pattern = 'N[\-]*[^P\-][\-]*[TS]'
+    regex_pattern = 'N(?=[\-]*[^P\-][\-]*[TS])'
 
     summary_gly_pos = []
     summary_binary = []
