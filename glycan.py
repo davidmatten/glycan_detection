@@ -42,7 +42,7 @@ def main(infile, out_dir, gaps):
     bin_fw = open(bin_fn, "w")
 
 #    regex_pattern = 'N[\-]*[^P\-][\-]*[TS]'
-    regex_pattern = 'N(?=[\-]*[^P\-][\-]*[TS])'
+    regex_pattern = 'N(?=[\-]*[^P][\-]*[TS])'
 
     summary_gly_pos = []
     summary_binary = []
